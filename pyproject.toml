@@ -1,0 +1,25 @@
+[project]
+name = "tteso-agents-opentes"
+version = "1.0.0"
+description = "Agentes do mercado transativo do OpenTES (time TTESO) sobre o PADE 3.0, e os exemplos da plataforma usados no projeto"
+readme = "README.md"
+requires-python = ">=3.12"
+license = "MIT"
+authors = [{ name = "Time TTESO, GREI-UFC" }]
+dependencies = [
+    # O PADE e um projeto independente, mantido em grei-ufc/pade: entra como
+    # pacote publicado, sem copia do nucleo neste repositorio.
+    "pade-agents==3.0",
+    # Os modelos de otimizacao que os agentes chamam.
+    "tteso-market-opentes",
+    "numpy>=2.0",
+]
+
+[project.optional-dependencies]
+# Backend `omnet` da camada de rede (servidor 6TiSCH do co-simulation-opentes).
+rede = ["pyzmq>=26"]
+# Exemplo exemplos/mosaik_example (PADE + Mosaik 3).
+mosaik = ["mosaik>=3.5", "mosaik-api-v3>=3.0.14"]
+
+[tool.uv.sources]
+tteso-market-opentes = { git = "https://github.com/grei-ufc/tteso-market-opentes" }
