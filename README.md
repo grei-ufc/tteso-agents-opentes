@@ -5,6 +5,8 @@
 [![image](https://img.shields.io/badge/-Python%20Version%20|%203.12.11-42b85a?logo=Python&logoColor=fbec41&color=42b85a&labelColor=grey&style=flat)](https://www.python.org/downloads/release/python-31112/)
 [![PyPI](https://img.shields.io/badge/PyPI-pade--agents%203.0-42b85a?logo=pypi&logoColor=white&style=flat)](https://pypi.org/project/pade-agents/)
 
+**[Documentação do projeto](https://grei-ufc.github.io/tteso-agents-opentes/)**: instalação, tutoriais, guias práticos, referência dos agentes, dos protocolos, dos exemplos e da API, e a atualização do PADE da versão 2.2 para a 3.0.
+
 Repositório do time **TTESO** (Sistemas Transativos e Otimização) do projeto
 [OpenTES](https://github.com/grei-ufc/general-opentes), do Grupo de Redes
 Elétricas Inteligentes (GREI) da UFC. Aqui ficam:
@@ -39,9 +41,8 @@ agentes/
   network_link.py         a camada de rede entre os agentes: ideal, com perda ou 6TiSCH (OMNeT++)
   negociacao_isolada.py   roda a negociação do dia seguinte sem Mosaik, OpenDSS ou OMNeT++
 exemplos/                 os exemplos do PADE 3.0, cada um com changelogs.md e changelogs_en.md
-docs/
-  atualizacao-pade.md     o que mudou do PADE 2.2 para o 3.0, e por quê
-  MIGRACAO_GUIA.md        o guia de migração do PADE legado, arquivo por arquivo
+docs/                     a documentação (MkDocs), publicada no GitHub Pages, com
+                          a atualização do PADE e o guia de migração
 ```
 
 ## Instalação
@@ -104,14 +105,15 @@ Mosaik e do fluxo de potência no OpenDSS, e roda no co-simulation-opentes.
 A camada de rede continua disponível:
 
 ```bash
-NET_BACKEND=lossy NET_DROP_PROBABILITY=0.05 NET_TRACE=resultados/msg_trace.csv \
-  uv run agentes/negociacao_isolada.py
+NET_BACKEND=lossy NET_DROP_PROBABILITY=0.05 NET_TIME_SCALE=0.02 \
+NET_TRACE=resultados/msg_trace.csv uv run agentes/negociacao_isolada.py
 ```
 
 `lossy` sorteia perda e atraso por mensagem; `NET_TRACE` grava uma linha por
 mensagem enviada, com tamanho e tempo. Cada mensagem perdida espera o tempo
-limite da rodada (60 s) antes de ser reenviada, então com perda a negociação
-leva bem mais tempo: com 5% de perda, cerca de um minuto por rodada. O backend `omnet` (rede 6TiSCH ou Wi-SUN
+limite da rodada antes de ser reenviada: 60 s × `NET_TIME_SCALE`, no mínimo 3 s.
+Com 5% de perda e `NET_TIME_SCALE=0.02`, a negociação fecha nas mesmas 42
+rodadas, com 18 retransmissões. O backend `omnet` (rede 6TiSCH ou Wi-SUN
 FAN) precisa do servidor de rede do co-simulation-opentes.
 
 As variáveis do modelo (`MARKET_FASE`, `MARKET_DISPOSITIVO`, `MARKET_CRITERIO`
@@ -167,8 +169,8 @@ comando `pade start-runtime`, e resultou na versão 3.0, publicada no PyPI como
 `pade-agents`. O formato das mensagens ACL não mudou.
 
 O histórico completo, com a comparação entre as versões, está em
-[docs/atualizacao-pade.md](docs/atualizacao-pade.md), e o guia arquivo por
-arquivo em [docs/MIGRACAO_GUIA.md](docs/MIGRACAO_GUIA.md).
+[A atualização do PADE](https://grei-ufc.github.io/tteso-agents-opentes/explanation/pade-update/), e o guia arquivo por
+arquivo em [Guia de migração](https://grei-ufc.github.io/tteso-agents-opentes/how-to-guides/migration-guide/).
 
 ## Autoria
 

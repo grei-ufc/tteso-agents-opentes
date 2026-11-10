@@ -91,7 +91,7 @@ agentes mínimos aos de sistemas de potência, à norma IEC 61850 e ao acoplamen
 com o Mosaik. Cada pasta de `exemplos/` tem um `changelogs.md` com o que foi
 verificado. Quem traz um agente da versão anterior precisa usar identificadores
 de agente completos, com endereço e porta (`agente@localhost:20000`), e a sessão
-compartilhada da execução; o resto está no [guia de migração](MIGRACAO_GUIA.md).
+compartilhada da execução; o resto está no [guia de migração](../how-to-guides/migration-guide.md).
 
 ## O que ficou igual
 
